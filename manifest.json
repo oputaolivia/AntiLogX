@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+    "name": "AntiLogX Extension",
+    "version": "1.0",
+    "description": "Detect and prevent keylogging activities in Chrome.",
+    "permissions": [
+      "activeTab",
+      "storage",
+      "scripting"
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_popup": "popup.html",
+      "default_title": "Anti-Keylogger"
+    },
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["libs/crypto-js.js","content.js"]
+      }
+    ]
+  }
+  
