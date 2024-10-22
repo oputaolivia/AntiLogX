@@ -1,26 +1,54 @@
 let isMonitoring = true;
 
-// AES encryption key
-const encryptionKey = "secret_key_123";
+function generateKey() {
+    return CryptoJS.lib.WordArray.random(128 / 8).toString();
+}
 
-// Encrypt function using CryptoJS AES
+let encryptionKey = generateKey();  
+let previousKey = encryptionKey; 
+const rotationInterval = 60000; 
+
+
+function rotateKey() {
+    previousKey = encryptionKey; 
+    encryptionKey = generateKey(); 
+}
+
+// Start rotating keys every 60 seconds
+setInterval(rotateKey, rotationInterval);
+
 function encrypt(text) {
     return CryptoJS.AES.encrypt(text, encryptionKey).toString();
 }
 
-// Decrypt function using CryptoJS AES
 function decrypt(text) {
-    return CryptoJS.AES.decrypt(text, encryptionKey).toString(CryptoJS.enc.Utf8);
+    try {
+        return CryptoJS.AES.decrypt(text, encryptionKey).toString(CryptoJS.enc.Utf8);
+    } catch (error) {
+        try {
+            return CryptoJS.AES.decrypt(text, previousKey).toString(CryptoJS.enc.Utf8);
+        } catch (error) {
+            console.error("Decryption failed with both keys.");
+            return null;
+        }
+    }
 }
 
-// List of special keys that should not be processed
+
+// function encrypt(text) {
+//     return CryptoJS.AES.encrypt(text, encryptionKey).toString();
+// }
+
+// function decrypt(text) {
+//     return CryptoJS.AES.decrypt(text, encryptionKey).toString(CryptoJS.enc.Utf8);
+// }
+
 const specialKeys = [
     'Backspace', 'Tab', 'Enter', 'Shift', 'Control', 'Alt', 'CapsLock', 'Escape',
     'ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', 'Delete', 'Meta', 'Home', 'End', 
     'PageUp', 'PageDown', 'Insert'
 ];
 
-// Detect keystrokes, encrypt, and prevent them from being logged
 function handleKeystrokes(event) {
     if (!isMonitoring) return;
 
@@ -29,13 +57,10 @@ function handleKeystrokes(event) {
 
     // Check if the key is a special key
     if (specialKeys.includes(key)) {
-        return; // Do nothing for special keys
+        return;
     }
 
-    // Encrypt the keystroke
     const encryptedKey = encrypt(key);
-
-    // Output the encrypted keystroke in the console (This is where a keylogger would fail)
     console.log(`Encrypted key pressed: ${encryptedKey}`);
 
     // Decrypt the keystroke and simulate it in the input field (for demonstration)
@@ -59,7 +84,6 @@ function handleKeystrokes(event) {
     }
 }
 
-// Attach the keystroke handler to all input fields
 document.addEventListener('keydown', handleKeystrokes);
 
 // Listen for messages from the popup script to toggle monitoring
@@ -76,7 +100,6 @@ document.querySelectorAll('form').forEach((form) => {
         const inputs = form.querySelectorAll('input, textarea');
         
         inputs.forEach((input) => {
-            // Decrypt any encrypted input before submitting
             input.value = decrypt(input.value);
         });
     });
