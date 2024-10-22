@@ -35,14 +35,6 @@ function decrypt(text) {
 }
 
 
-// function encrypt(text) {
-//     return CryptoJS.AES.encrypt(text, encryptionKey).toString();
-// }
-
-// function decrypt(text) {
-//     return CryptoJS.AES.decrypt(text, encryptionKey).toString(CryptoJS.enc.Utf8);
-// }
-
 const specialKeys = [
     'Backspace', 'Tab', 'Enter', 'Shift', 'Control', 'Alt', 'CapsLock', 'Escape',
     'ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown', 'Delete', 'Meta', 'Home', 'End', 
