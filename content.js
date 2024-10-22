@@ -39,8 +39,9 @@ function handleKeystrokes(event) {
     console.log(`Encrypted key pressed: ${encryptedKey}`);
 
     // Decrypt the keystroke and simulate it in the input field (for demonstration)
-    event.preventDefault(); // Prevent the original key from being typed
+    event.preventDefault();
     const decryptedKey = decrypt(encryptedKey);
+    console.log(`Decrypted key pressed: ${decryptedKey}`);
 
     // Insert the decrypted key into the input field
     const inputField = event.target;
@@ -80,4 +81,3 @@ document.querySelectorAll('form').forEach((form) => {
         });
     });
 });
-
