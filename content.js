@@ -47,18 +47,15 @@ function handleKeystrokes(event) {
     // Capture the key pressed
     const key = event.key;
 
-    // Check if the key is a special key
     if (specialKeys.includes(key)) {
         return;
     }
 
     const encryptedKey = encrypt(key);
-    console.log(`Encrypted key pressed: ${encryptedKey}`);
 
     // Decrypt the keystroke and simulate it in the input field (for demonstration)
     event.preventDefault();
     const decryptedKey = decrypt(encryptedKey);
-    console.log(`Decrypted key pressed: ${decryptedKey}`);
 
     // Insert the decrypted key into the input field
     const inputField = event.target;
@@ -71,7 +68,6 @@ function handleKeystrokes(event) {
         inputField.value = inputField.value.substring(0, start) + decryptedKey + inputField.value.substring(end);
         inputField.setSelectionRange(start + 1, start + 1);
     } else {
-        // For types that don't support setSelectionRange (email, number, etc.), just append the decrypted key
         inputField.value += decryptedKey;
     }
 }
