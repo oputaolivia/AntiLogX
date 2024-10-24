@@ -28,7 +28,6 @@ function decrypt(text) {
         try {
             return CryptoJS.AES.decrypt(text, previousKey).toString(CryptoJS.enc.Utf8);
         } catch (error) {
-            console.error("Decryption failed with both keys.");
             return null;
         }
     }
@@ -78,7 +77,7 @@ document.addEventListener('keydown', handleKeystrokes);
 chrome.runtime.onMessage.addListener((message) => {
     if (message.action === 'toggleMonitoring') {
         isMonitoring = !isMonitoring;
-        console.log(`Keylogging detection is now ${isMonitoring ? 'ON' : 'OFF'}`);
+        alert(`Keylogging detection is now ${isMonitoring ? 'ON' : 'OFF'}`);
     }
 });
 
