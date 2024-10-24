@@ -21,7 +21,11 @@ The extension works in the background, encrypting all typed inputs in web forms 
 
 ## Installation
 
-To install AntiLogX, follow these steps:
+### Prerequisites
+- Google Chrome.
+- Node.js and npm for building the extension if you wish to modify the source code.
+
+### Steps to Install:
 
 1. Clone the repository:
     ```sh
@@ -35,7 +39,8 @@ To install AntiLogX, follow these steps:
     - Open Chrome and go to `chrome://extensions/`.
     - Enable "Developer mode" by clicking the toggle switch in the top right corner.
     - Click the "Load unpacked" button and select the `AntiLogX` directory.
-
+4. The extension should now appear in your browser.
+   
 ## Usage
 
 After installing the extension, it will automatically begin monitoring for keylogging activities. You can access the extension's settings and logs by clicking on the AntiLogX icon in the Chrome toolbar.
@@ -47,6 +52,12 @@ After installing the extension, it will automatically begin monitoring for keylo
 - **Real-Time Encryption**: Keystrokes are encrypted instantly upon entry and decrypted only when necessary.
 - **User Control**: Users can toggle keystroke monitoring on and off via the extension’s interface.
 - **Minimal Impact on Usability**: The system handles special keys and input fields without disrupting the user experience.
+
+## How It Works
+- **Keystroke Capture**: The extension listens for all keystrokes using a keydown event listener.
+- **Encryption**: Each keystroke is encrypted using AES with a 128-bit key, generated dynamically.
+- **Decryption**: The system decrypts the keystroke in real time before inserting it into the input field.
+- **Key Rotation**: The encryption key is rotated every 60 seconds to enhance security, ensuring that even if a keylogger captures the key, it becomes obsolete after a short time.
 
 ## Architecture and Design
 
